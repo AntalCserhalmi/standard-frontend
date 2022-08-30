@@ -4,6 +4,9 @@ import { useNotification } from "web3uikit";
 import { contract, abi } from "../constants/index";
 import QuantityButton from "./buttons/QuantityButton";
 import MintButton from "./buttons/MintButton";
+import Image from "next/image";
+import OS from "../public/images/os.svg";
+import Etherscan from "../public/images/etherscan.svg";
 
 const PublicMint = (): JSX.Element => {
 
@@ -11,7 +14,7 @@ const PublicMint = (): JSX.Element => {
 
     const walletChainId = Number(chainIdHex);
     const contractAddress = contract.address;
-    const collectionSize = "1111";
+    const collectionSize = "3333";
 
     const [mintPaused, setMintPaused] = useState(false);
     const [mintEnabled, setMintEnabled] = useState(false);
@@ -75,7 +78,6 @@ const PublicMint = (): JSX.Element => {
             const totalSupplyCall: any = await getTotalySupply();
             const mintedCall: any = await getMinted();
             const costCall: any = await getCost();
-
             setMintEnabled(mintEnabledCall);
             setMintPaused(mintPausedCall);
             setTotalSupply(totalSupplyCall.toString());
@@ -84,7 +86,7 @@ const PublicMint = (): JSX.Element => {
 
             console.log(mintedCall);
 
-            if (Number(mintedCall) >= 3){
+            if (Number(mintedCall) >= 15){
                 setPriceDetails(`0 ETH`);
                 setQuantity(0);
                 setPrice(1000);
@@ -103,13 +105,15 @@ const PublicMint = (): JSX.Element => {
     const increase = () => {
         let nextQuantity = 0;
 
-        if (quantity === 3) {
-            nextQuantity = 3;
-        } else {
+        if (quantity === 15) {
+            nextQuantity = 15;
+        } else if (minted + quantity >= 15){
+            nextQuantity = quantity;
+        }else{
             nextQuantity = quantity + 1;
         }
 
-        if (minted === 3){
+        if (minted === 15){
             nextQuantity = 0;
         }
 
@@ -128,7 +132,7 @@ const PublicMint = (): JSX.Element => {
             nextQuantity = quantity - 1;
         }
 
-        if (minted === 3){
+        if (minted === 15){
             nextQuantity = 0;
         }
 
@@ -202,6 +206,18 @@ const PublicMint = (): JSX.Element => {
 
     return (
         <>
+            <div className="absolute top-6 flex flex-row items-center right-56 md:right-auto">
+                <div className="w-10 h-10 hover:scale-125 transition-all duration-300">
+                    <a href="https://opensea.io/" target="_blank">
+                        <Image src={OS} layout="responsive"/>
+                    </a>
+                </div>
+                <div className="w-10 h-10 m-5 hover:scale-125 transition-all duration-300">
+                    <a href="https://etherscan.io/" target="_blank">
+                        <Image src={Etherscan} layout="responsive"/>
+                    </a>
+                </div>
+            </div>
             {
                 checkAllMinted() ?
                     <div className="flex items-center flex-col justify-evenly bg-zinc-900 rounded-xl opacity-90 w-screen md:w-9/12 lg:w-7/12 xl:w-6=12 md:h-80 md:p-10 shadow-orange-500 shadow-2xl">
@@ -209,8 +225,8 @@ const PublicMint = (): JSX.Element => {
 
                         <div className="text-white p-3 border-2 border-green-700 rounded-xl text-2xl md:w-9/12 md:h-2/4 md:text-3xl xl:w-8/12 xl:text-5xl text-center font-poppins font-medium bg-green-800 bg-opacity-90 shadow-green-800 shadow-md m-8 md:m-5">Thank you for the participation</div>
                     </div> :
-                    <div className="flex items-center flex-col justify-evenly rounded-xl opacity-90 w-screen md:w-9/12 lg:w-7/12 xl:w-6/12 md:h-80 md:p-10 shadow-black shadow-2xl">
-                        <div className="text-black p-3 border-2 rounded-xl w-6/12 text-5xl text-center font-poppins font-medium bg-white bg-opacity-90 shadow-black shadow-md m-8 md:m-0">
+                    <div className="flex items-center flex-col justify-evenly rounded-xl opacity-90 w-screen md:w-9/12 lg:w-7/12 xl:w-6/12 md:h-80 md:p-10 shadow-blue-700 shadow-lg">
+                        <div className="text-black p-3 border-2 rounded-xl w-6/12 text-5xl text-center font-poppins font-medium bg-white bg-opacity-90 shadow-white shadow-md m-8 md:m-0">
                             {totalSupply}/{collectionSize}
                         </div>
                         <div className="flex justify-around items-center w-8/12">

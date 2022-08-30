@@ -1,12 +1,13 @@
 import Head from "next/head";
 import PublicMint from "../../components/Mint";
 import Header from "../../components/Header";
-
+import Image from "next/image";
+import mintLive from "../../public/images/mintlive.png";
 const Mint = (): JSX.Element => {
     return(
-        <div className="h-screen w-screen p-16 flex flex-col justify-center md:justify-evenly items-center bg-wallpaper bg-fixed bg-cover bg-center">
+        <div className="h-screen w-screen p-40 flex flex-col justify-center md:justify-evenly items-center bg-wallpaper bg-fixed bg-cover bg-center border-red-700">
             <Head>
-                <title>Standard ERC 721 Contract</title>
+                <title>Moonslugs</title>
                 <meta name="description" content="Standard ERC 721 Contract" />
                 <meta property="og:title" content="Standard ERC 721 Contract" />
                 <meta property="og:type" content="website" />
@@ -17,9 +18,10 @@ const Mint = (): JSX.Element => {
             </Head>
 
             <Header />
-            <h1 className="text-4xl m-5 md:text-6xl text-center font-poppins text-white italic">
-                Tiny Bunnies
-            </h1>
+            <div className="h-80 w-80 md:h-128 md:w-128">
+                <Image src={mintLive} layout="responsive"/>
+            </div>
+            
             <PublicMint />
         </div>
     );
